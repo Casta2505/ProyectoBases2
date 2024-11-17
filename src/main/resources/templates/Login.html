@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login y Registro</title>
+<style>
+/* Estilo General */
+body {
+	font-family: 'Arial', sans-serif;
+	background: linear-gradient(to right, #dce0e6, #a9b1c3);
+	color: #2c3e50;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	min-height: 100vh;
+	padding-top: 2rem;
+}
+
+/* Asegurar que todos los elementos se comporten de manera consistente con el box-sizing */
+*, *::before, *::after {
+	box-sizing: border-box;
+}
+
+/* Contenedor Principal */
+.container {
+	width: 100%;
+	max-width: 700px;
+	background: white;
+	border-radius: 15px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+	overflow: hidden;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	padding: 1rem;
+	/* Agregar algo de padding para evitar que los elementos estén pegados */
+}
+
+/* Panel de Animación */
+.panel {
+	width: 100%;
+	background: #1c5980;
+	color: white;
+	padding: 2rem;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.panel h1 {
+	font-size: 2rem;
+	margin: 0;
+}
+
+.panel p {
+	margin: 1rem 0;
+}
+
+.panel button {
+	background-color: white;
+	color: #1c5980;
+	border: none;
+	padding: 10px 20px;
+	font-size: 1rem;
+	font-weight: bold;
+	border-radius: 20px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.panel button:hover {
+	background-color: #dfe6e9;
+}
+
+/* Formulario */
+.form-container {
+	width: 100%;
+	padding: 2rem;
+	display: none; /* Ocultamos ambos formularios por defecto */
+}
+
+.form-container form {
+	display: flex;
+	flex-direction: column;
+}
+
+.form-container input, .form-container button {
+	width: 100%;
+	/* Aseguramos que los inputs y el botón ocupen todo el ancho del formulario */
+	padding: 10px;
+	font-size: 1rem;
+	border: 1px solid #dcdde1;
+	border-radius: 5px;
+	margin-bottom: 1rem; /* Separación entre inputs y botones */
+}
+
+.form-container button {
+	background-color: #1c5980;
+	color: white;
+	border: none;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.form-container button:hover {
+	background-color: #4a47a3;
+}
+
+/* Mostrar el formulario activo */
+.form-container.active {
+	display: block;
+}
+
+/* Estilos para el mensaje */
+.alert {
+	color: red;
+	font-weight: bold;
+	text-align: center;
+	margin-top: 1rem;
+}
+</style>
+</head>
+<body>
+	<!-- Contenedor Principal -->
+	<div class="container" th:attr="data-mensaje=${mensaje}">
+
+		<!-- Panel de Animación -->
+		<div class="panel">
+			<h1>Bienvenido</h1>
+			<p>¿Aún no tienes cuenta? Regístrate ahora.</p>
+			<button id="switch-to-register">Ir a Registro</button>
+			<p>¿Ya tienes cuenta? Inicia sesión.</p>
+			<button id="switch-to-login">Ir a Login</button>
+		</div>
+
+		<!-- Formulario de Login -->
+		<div class="form-container login-form active">
+			<form action="/login" method="POST">
+				<h2>Iniciar Sesión</h2>
+				<input type="text" name="user" id="user" placeholder="Usuario"
+					required> <input type="password" name="password"
+					id="password" placeholder="Contraseña" required>
+				<button type="submit">Entrar</button>
+			</form>
+			<!-- Mostrar mensaje si existe -->
+			<div th:if="${mensaje}" class="alert">
+				<p th:text="${mensaje}"></p>
+			</div>
+		</div>
+
+		<!-- Formulario de Registro -->
+		<div class="form-container register-form">
+			<form action="/register" method="POST">
+				<h2>Registro</h2>
+				<input type="text" name="nombre" id="nombre" placeholder="Nombre"
+					required> <input type="text" name="email" id="email"
+					placeholder="Email" required> <input type="text"
+					name="telefono" id="telefono" placeholder="Telefono" required>
+				<input type="text" name="direccion" id="direccion"
+					placeholder="Direccion" required> <input type="password"
+					name="contrasena" id="contrasena" placeholder="Contrasena" required>
+				<button type="submit">Registrar</button>
+			</form>
+			<!-- Mostrar mensaje si existe -->
+			<div th:if="${mensaje}" class="alert">
+				<p th:text="${mensaje}"></p>
+			</div>
+		</div>
+	</div>
+
+	<!-- JavaScript -->
+	<script>
+        const switchToRegister = document.getElementById('switch-to-register');
+        const switchToLogin = document.getElementById('switch-to-login');
+        const loginForm = document.querySelector('.login-form');
+        const registerForm = document.querySelector('.register-form');
+
+        // Cambio de formularios con animación
+        switchToRegister.addEventListener('click', () => {
+            loginForm.classList.remove('active');
+            registerForm.classList.add('active');
+        });
+
+        switchToLogin.addEventListener('click', () => {
+            registerForm.classList.remove('active');
+            loginForm.classList.add('active');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propiedades</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<style>
+.table-container {
+	display: flex;
+	justify-content: space-between;
+	gap: 20px; /* Espacio entre las tablas */
+	padding: 20px;
+}
+
+.table {
+	width: 48%;
+	/* Asegura que cada tabla ocupe casi la mitad del espacio */
+}
+
+.editable {
+	cursor: pointer;
+}
+
+.editable:hover {
+	background-color: #f0f0f0;
+}
+</style>
+</head>
+<body>
+	<br>
+	<br>
+	<form action="/IndexAdmin">
+		<button type="submit">Volver</button>
+	</form>
+	<div class="container">
+		<h1 class="my-4 text-center">Gestión de Propiedades</h1>
+
+		<!-- Contenedor de las tablas de casas y apartamentos -->
+		<div class="table-container">
+			<!-- Tabla de Casas -->
+			<div class="table">
+				<h3>Casas</h3>
+				<table class="table table-bordered" id="casasTable">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Área</th>
+							<th>Precio</th>
+							<th>Dirección</th>
+							<th>Habitaciones</th>
+							<th>Acción</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="casa : ${casas}">
+							<td th:text="${casa.id}"></td>
+							<td class="editable" th:text="${casa.area}"
+								th:data-id="${casa.id}" th:data-field="area"></td>
+							<td class="editable" th:text="${casa.precio}"
+								th:data-id="${casa.id}" th:data-field="precio"></td>
+							<td class="editable" th:text="${casa.direccion}"
+								th:data-id="${casa.id}" th:data-field="direccion"></td>
+							<td class="editable" th:text="${casa.habitaciones}"
+								th:data-id="${casa.id}" th:data-field="habitaciones"></td>
+							<td>
+								<button class="btn btn-danger" th:data-id="${casa.id}"
+									onclick="eliminarRegistro(this, 'casa')">Eliminar</button>
+							</td>
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<!-- Tabla de Apartamentos -->
+			<div class="table">
+				<h3>Apartamentos</h3>
+				<table class="table table-bordered" id="apartamentosTable">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Área</th>
+							<th>Precio</th>
+							<th>Dirección</th>
+							<th>Habitaciones</th>
+							<th>Acción</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="apartamento : ${apartamentos}">
+							<td th:text="${apartamento.id}"></td>
+							<td class="editable" th:text="${apartamento.area}"
+								th:data-id="${apartamento.id}" th:data-field="area"></td>
+							<td class="editable" th:text="${apartamento.precio}"
+								th:data-id="${apartamento.id}" th:data-field="precio"></td>
+							<td class="editable" th:text="${apartamento.direccion}"
+								th:data-id="${apartamento.id}" th:data-field="direccion"></td>
+							<td class="editable" th:text="${apartamento.habitaciones}"
+								th:data-id="${apartamento.id}" th:data-field="habitaciones"></td>
+							<td>
+								<button class="btn btn-danger" th:data-id="${apartamento.id}"
+									onclick="eliminarRegistro(this, 'apartamento')">Eliminar</button>
+							</td>
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<script>
+    function eliminarRegistro(button, tipo) {
+        var id = $(button).data('id');
+        if (confirm('¿Estás seguro de que deseas eliminar este registro?')) {
+            // Enviar la solicitud AJAX
+            $.ajax({
+                url: tipo === 'casa' ? '/eliminarCasa' : '/eliminarApartamento',
+                method: 'POST',
+                data: { id: id },
+                success: function(response) {
+                    alert('Registro eliminado exitosamente');
+                    // Eliminar la fila de la tabla
+                    $(button).closest('tr').remove();
+                },
+                error: function() {
+                    alert('Error al eliminar el registro');
+                }
+            });
+        }
+    }
+</script>
+
+	<!-- Scripts de Bootstrap y AJAX -->
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script>
+        $(document).ready(function() {
+            // Hacer la celda editable al hacer clic
+            $('.editable').click(function() {
+                var currentText = $(this).text();
+                var field = $(this).data('field');
+                var id = $(this).data('id');
+                console.log('ID extraído: ', id); // Verifica el valor de id
+                id = Number(id);
+                console.log('ID convertido: ', id); // Verifica la conversión
+                            
+                var input = $('<input>', { type: 'text', value: currentText, class: 'form-control' });
+
+                $(this).html(input);
+
+                input.focus();
+
+                // Cuando el usuario deja de editar (presiona enter o hace blur)
+                input.blur(function() {
+                    var newValue = input.val();
+                    $(this).parent().html(newValue);
+
+                    // Asegurarse de que el id sea un número
+                    id = Number(id); // Convertir el id a número
+
+                    if (isNaN(id)) {
+                        alert("ID no válido");
+                        return;
+                    }
+
+                    // Determinar si es una Casa o un Apartamento
+                    var url = $(this).closest('table').attr('id') === 'casasTable' ? '/actualizarCasa' : '/actualizarApartamento';
+
+                    // Enviar la actualización al servidor vía AJAX
+                    $.ajax({
+                        url: url,
+                        method: 'POST',
+                        data: {
+                            id: id,  // Asegúrate de que id sea un número válido
+                            field: field,
+                            value: newValue
+                        },
+                        success: function(response) {
+                            console.log('Actualización exitosa');
+                        },
+                        error: function() {
+                            alert('Error al actualizar');
+                        }
+                    });
+                });
+
+                input.keypress(function(e) {
+                    if (e.which == 13) { // Enter key
+                        input.blur(); 
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

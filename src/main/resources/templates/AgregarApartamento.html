@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulario para Ingresar Apartamento</title>
+<style>
+/* General */
+body {
+	font-family: 'Arial', sans-serif;
+	background: linear-gradient(to right, #dce0e6, #a9b1c3);
+	color: #2c3e50;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	min-height: 100vh;
+	padding-top: 2rem;
+}
+
+/* Contenedor del formulario */
+.container {
+	background-color: #ffffff;
+	padding: 2rem;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	max-width: 400px;
+	width: 100%;
+	border: 1px solid #b0bec5;
+}
+
+/* Título */
+.title {
+	background-color: #34495e;
+	color: #ffffff;
+	padding: 10px;
+	border-radius: 5px;
+	margin-bottom: 1rem;
+	font-size: 1.5rem;
+	font-weight: bold;
+	text-align: left;
+}
+
+/* Etiquetas */
+label {
+	display: block;
+	font-weight: bold;
+	margin-bottom: 0.5rem;
+	color: #34495e;
+}
+
+/* Entradas */
+input[type="text"], input[type="number"], input[type="url"] {
+	width: calc(100% - 10px);
+	padding: 10px;
+	margin-bottom: 1rem;
+	border: 1px solid #b0bec5;
+	border-radius: 5px;
+	font-size: 1rem;
+	color: #34495e;
+	background-color: #ecf0f1;
+}
+
+input:focus {
+	border-color: #1c5980;
+	outline: none;
+	box-shadow: 0 0 5px rgba(28, 89, 128, 0.5);
+}
+
+/* Checkbox */
+input[type="checkbox"] {
+	margin-right: 0.5rem;
+}
+
+/* Botón */
+button {
+	display: block;
+	width: 100%;
+	padding: 10px;
+	background-color: #1c5980;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	font-size: 1rem;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+	background-color: #12394e;
+	transform: scale(1.02);
+}
+
+/* Ajustes responsivos */
+@media ( max-width : 480px) {
+	body {
+		padding: 1rem;
+	}
+	.container {
+		padding: 1.5rem;
+	}
+	input[type="text"], input[type="number"], input[type="url"] {
+		font-size: 0.9rem;
+	}
+	button {
+		font-size: 0.9rem;
+	}
+}
+</style>
+</head>
+<body>
+	<div class="container">
+		<form action="/IndexAdmin">
+			<button type="submit">Volver</button>
+		</form>
+		<br>
+		<div class="title">Formulario de Registro de Apartamento</div>
+		<form action="/AgregarApartamento" method="POST">
+			<!-- Área -->
+			<label for="area">Área (m²):</label> <input type="number" id="area"
+				name="area" step="0.01" required><br>
+
+			<!-- Precio -->
+			<label for="precio">Precio (COP):</label> <input type="number"
+				id="precio" name="precio" step="0.01" required><br>
+
+			<!-- Dirección -->
+			<label for="direccion">Dirección:</label> <input type="text"
+				id="direccion" name="direccion" required><br>
+
+			<!-- Habitaciones -->
+			<label for="habitaciones">Número de Habitaciones:</label> <input
+				type="number" id="habitaciones" name="habitaciones" required><br>
+
+			<!-- Piso -->
+			<label for="piso">Piso:</label> <input type="number" id="piso"
+				name="piso" required><br>
+
+			<!-- Balcón -->
+			<label for="balcon"> <input type="checkbox" id="balcon"
+				name="balcon" value="true"> ¿Tiene Balcón?
+			</label><br>
+
+			<!-- Número de Pisos del Edificio -->
+			<label for="numDePisosEdificio">Número de Pisos en el
+				Edificio:</label> <input type="number" id="numDePisosEdificio"
+				name="numDePisosEdificio" required><br>
+
+			<!-- URL Imagen -->
+			<label for="urlImagen">URL de Imagen:</label> <input type="text"
+				id="urlImagen" name="urlImagen"><br>
+
+			<!-- ID del Apartamento -->
+			<input type="hidden" id="idApartamento" name="idApartamento"
+				value="{idApartamento}">
+
+			<!-- Botón de Enviar -->
+			<button type="submit">Registrar Apartamento</button>
+		</form>
+	</div>
+</body>
+</html>
