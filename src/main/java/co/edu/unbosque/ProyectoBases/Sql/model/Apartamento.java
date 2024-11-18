@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 
 @Entity
 public class Apartamento {
@@ -15,10 +16,12 @@ public class Apartamento {
 	private double area;
 	private double precio;
 	private String direccion;
+	private boolean comprada;
 	private Integer habitaciones;
 	private Integer piso;
 	private Boolean balcon;
 	private Integer numDePisosEdificio;
+	@Lob
 	@Column(length = 1000)
 	private String urlImagen;
 
@@ -28,6 +31,14 @@ public class Apartamento {
 
 	public void setUrlImagen(String urlImagen) {
 		this.urlImagen = urlImagen;
+	}
+
+	public boolean getComprada() {
+		return comprada;
+	}
+
+	public void setComprada(boolean comprada) {
+		this.comprada = comprada;
 	}
 
 	public Long getId() {

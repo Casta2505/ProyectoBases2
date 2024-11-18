@@ -131,7 +131,10 @@ body {
 							<p class="card-text">
 								Balcón: <span th:text="${apartamento.balcon}"></span>
 							</p>
-							<a href="#" class="btn btn-primary">Comprar</a>
+							<form action="/ComprarApartamentoEnvio" method="get">
+								<input type="hidden" name="id" th:value="${apartamento.id}">
+								<button type="submit" class="btn btn-primary">Comprar</button>
+							</form>
 						</div>
 					</div>
 				</div>

@@ -8,27 +8,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import co.edu.unbosque.ProyectoBases.MariaDB.model.Cliente;
 import co.edu.unbosque.ProyectoBases.MariaDB.repository.ClienteRepository;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
-@SessionAttributes("cuenta")
 public class ClienteController {
 	@Autowired
 	public ClienteRepository rep;
 
 	@PostMapping("/login")
-	public String login(Model model, @RequestParam("user") String user, @RequestParam("password") String password) {
+	public String login(Model model, @RequestParam("user") String user, @RequestParam("password") String password,
+			HttpSession session) {
 		Optional<Cliente> usuAux = rep.findByEmail(user);
 		if (usuAux.isPresent()) {
 			if (usuAux.get().getContrasena().equals(password)) {
 				if (usuAux.get().getEmail().equals("admin")) {
-					model.addAttribute("cuenta", usuAux.get());
+					session.setAttribute("cuenta", usuAux.get());
 					return "IndexAdmin";
 				}
-				model.addAttribute("cuenta", usuAux.get());
+				session.setAttribute("cuenta", usuAux.get());
 				return "IndexCliente";
 			}
 		}

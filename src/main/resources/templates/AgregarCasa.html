@@ -126,7 +126,8 @@ button:hover {
 		</form>
 		<br>
 		<div class="title">Formulario de Registro de Casa</div>
-		<form action="/AgregarCasa" method="POST">
+		<form action="/AgregarCasa" method="POST"
+			enctype="multipart/form-data">
 			<!-- Área -->
 			<label for="area">Área (m²):</label> <input type="number" id="area"
 				name="area" step="0.01" required><br>
@@ -155,11 +156,9 @@ button:hover {
 					name="jardin" value="no"> <label for="jardin_no">No</label>
 			</div>
 
-			<!-- URL Imagen -->
-			<label for="urlImagen">URL de Imagen:</label> <input type="text"
-				id="urlImagen" name="urlImagen"><br>
 
-			<!-- Botón de Enviar -->
+			<label for="imagen">Ingrese Url imagen:</label> <input type="text"
+				id="imagen" name="imagen" /> <br></br>
 			<button type="submit">Registrar Casa</button>
 		</form>
 	</div>
