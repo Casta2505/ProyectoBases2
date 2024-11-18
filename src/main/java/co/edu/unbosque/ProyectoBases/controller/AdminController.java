@@ -31,7 +31,6 @@ public class AdminController {
 	public String actualizarCasa(Model model, @RequestParam Long id, @RequestParam String field,
 			@RequestParam String value) {
 		Casa casa = casaRepository.findById(id).orElseThrow();
-		System.out.println(casa.getArea());
 		if (field.equals("area")) {
 			casa.setArea(Double.parseDouble(value));
 		} else if (field.equals("precio")) {
@@ -41,9 +40,9 @@ public class AdminController {
 		} else if (field.equals("direccion")) {
 			casa.setDireccion(value);
 		}
+		casaRepository.save(casa);
 		model.addAttribute("casas", casaRepository.findAll());
 		model.addAttribute("apartamentos", apartamentoRepository.findAll());
-		casaRepository.save(casa);
 		return "AdminTabla";
 	}
 
@@ -51,7 +50,6 @@ public class AdminController {
 	public String actualizarApartamento(Model model, @RequestParam Long id, @RequestParam String field,
 			@RequestParam String value) {
 		Apartamento apartamento = apartamentoRepository.findById(id).orElseThrow();
-		System.out.println(apartamento.getArea());
 		if (field.equals("area")) {
 			apartamento.setArea(Double.parseDouble(value));
 		} else if (field.equals("precio")) {

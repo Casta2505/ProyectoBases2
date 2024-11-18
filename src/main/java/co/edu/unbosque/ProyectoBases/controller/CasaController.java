@@ -69,7 +69,7 @@ public class CasaController {
 		casaAux.setUrlImagen(imagen);
 		casaAux.setComprada(false);
 		this.casaRep.save(casaAux);
-		return "IndexCliente";
+		return "IndexAdmin";
 	}
 
 	@GetMapping("/ComprarCasaEnvio")

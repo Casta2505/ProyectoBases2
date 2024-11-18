@@ -52,7 +52,7 @@ public class ApartamentoController {
 		apartamentoAux.setComprada(false);
 		aptoRep.save(apartamentoAux);
 
-		return "IndexCliente";
+		return "IndexAdmin";
 	}
 
 	@GetMapping("/ComprarApartamentoEnvio")
