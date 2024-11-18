@@ -45,6 +45,7 @@ public class CompraController {
 			model.addAttribute("cuenta", cliente);
 			comRep.save(compra);
 		} catch (Exception e) {
+			e.printStackTrace();
 			Apartamento casa = (Apartamento) aux;
 			model.addAttribute("cliente", cliente);
 			Compra compra = new Compra();
