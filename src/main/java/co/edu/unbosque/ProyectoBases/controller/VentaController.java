@@ -2,11 +2,14 @@ package co.edu.unbosque.ProyectoBases.controller;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -96,5 +99,12 @@ public class VentaController {
 		this.ventaRep.save(venta);
 		model.addAttribute("cuenta", cliente);
 		return "IndexCliente";
+	}
+	
+	@GetMapping("/MostrarVentas")
+	public String mostrarVentas(Model model, @ModelAttribute("cuenta") Cliente cliente) {
+		List<Venta> lista = ventaRep.findAll();
+		model.addAttribute("ventas", lista);
+		return "MostrarVentas";
 	}
 }

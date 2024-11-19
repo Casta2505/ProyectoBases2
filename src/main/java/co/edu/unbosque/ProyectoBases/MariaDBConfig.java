@@ -18,41 +18,30 @@ import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(
-    basePackages = "co.edu.unbosque.ProyectoBases.MariaDB.repository",
-    entityManagerFactoryRef = "mariaDBEntityManager",
-    transactionManagerRef = "mariaDBTransactionManager"
-)
+@EnableJpaRepositories(basePackages = "co.edu.unbosque.ProyectoBases.MariaDB.repository", entityManagerFactoryRef = "mariaDBEntityManager", transactionManagerRef = "mariaDBTransactionManager")
 public class MariaDBConfig {
 
-
-    @Bean(name = "mariaDB")
-    @ConfigurationProperties(prefix = "mariadb.datasource")
-    public DataSource mariaDBDataSource() {
-        return DataSourceBuilder.create().build();
-    }
-
-	
-	@Bean("mariaDBEntityManager")
-	public LocalContainerEntityManagerFactoryBean mariaDBEntityManager(
-	        EntityManagerFactoryBuilder entityManagerFactoryBuilder) {
-	    Map<String, Object> jpaProperties = new HashMap<>();
-	    jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.MariaDBDialect");
-	    jpaProperties.put("hibernate.hbm2ddl.auto", "update");
-	    jpaProperties.put("hibernate.show_sql", "true");
-	    return entityManagerFactoryBuilder
-	            .dataSource(mariaDBDataSource())
-	            .packages("co.edu.unbosque.ProyectoBases.MariaDB.model")
-	            .persistenceUnit("cliente")
-	            .properties(jpaProperties)
-	            .build();
+	@Bean(name = "mariaDB")
+	@ConfigurationProperties(prefix = "mariadb.datasource")
+	public DataSource mariaDBDataSource() {
+		return DataSourceBuilder.create().build();
 	}
 
+	@Bean("mariaDBEntityManager")
+	public LocalContainerEntityManagerFactoryBean mariaDBEntityManager(
+			EntityManagerFactoryBuilder entityManagerFactoryBuilder) {
+		Map<String, Object> jpaProperties = new HashMap<>();
+		jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.MariaDBDialect");
+		jpaProperties.put("hibernate.hbm2ddl.auto", "update");
+		jpaProperties.put("hibernate.show_sql", "true");
+		return entityManagerFactoryBuilder.dataSource(mariaDBDataSource())
+				.packages("co.edu.unbosque.ProyectoBases.MariaDB.model").persistenceUnit("cliente")
+				.properties(jpaProperties).build();
+	}
 
-
-	    @Bean("mariaDBTransactionManager")
-	    public PlatformTransactionManager mariaDBTransactionManager(@Qualifier("mariaDBEntityManager")
-	                                                              LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
-	        return new JpaTransactionManager(entityManagerFactoryBean.getObject());
-	    }
+	@Bean("mariaDBTransactionManager")
+	public PlatformTransactionManager mariaDBTransactionManager(
+			@Qualifier("mariaDBEntityManager") LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
+		return new JpaTransactionManager(entityManagerFactoryBean.getObject());
+	}
 }

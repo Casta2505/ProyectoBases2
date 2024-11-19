@@ -2,15 +2,21 @@ package co.edu.unbosque.ProyectoBases.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
+
+import com.lowagie.text.Document;
+import com.lowagie.text.pdf.PdfWriter;
 
 import co.edu.unbosque.ProyectoBases.MariaDB.model.Cliente;
 import co.edu.unbosque.ProyectoBases.MariaDB.model.Compra;
@@ -22,6 +28,9 @@ import co.edu.unbosque.ProyectoBases.PostGres.model.Casa;
 import co.edu.unbosque.ProyectoBases.PostGres.repository.CasaRepository;
 import co.edu.unbosque.ProyectoBases.Sql.model.Apartamento;
 import co.edu.unbosque.ProyectoBases.Sql.repository.ApartamentoRepository;
+import co.edu.unbosque.ProyectoBases.util.ListarComprasPdf;
+import co.edu.unbosque.ProyectoBases.util.ListarVentasPdf;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -108,6 +117,26 @@ public class ClienteController {
 		return "ListarCompras";
 	}
 
+	@GetMapping("/verCompras/{format}")
+	public void exportToPdf(@PathVariable String format, @SessionAttribute("cuenta") Cliente cliente,
+			HttpServletResponse response) {
+		if ("pdf".equals(format)) {
+			List<Compra> compras = compraRep.findAllByIdCliente(cliente);
+			response.setContentType("application/pdf");
+			response.setHeader("Content-Disposition", "inline; filename=compras.pdf");
+			Document document = new Document();
+			try {
+				PdfWriter writer = PdfWriter.getInstance(document, response.getOutputStream());
+				document.open();
+				ListarComprasPdf pdfGenerator = new ListarComprasPdf();
+				pdfGenerator.buildPdfDocument(Map.of("compras", compras), document, writer, null, response);
+				document.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	@GetMapping("/verVentas")
 	public String verVentas(Model model, @SessionAttribute("cuenta") Cliente cliente) {
 		List<Venta> ventas = ventaRep.findAllByIdCliente(cliente);
@@ -126,6 +155,35 @@ public class ClienteController {
 		model.addAttribute("apartamentos", apartamentos);
 		model.addAttribute("ventas", ventas);
 		return "ListarVentas";
+	}
+
+	@GetMapping("/verVentas/{format}")
+	public void exportToPdf2(@PathVariable String format, @SessionAttribute("cuenta") Cliente cliente,
+	        HttpServletResponse response) {
+	    if ("pdf".equals(format)) {
+	        List<Venta> ventas = ventaRep.findAllByIdCliente(cliente);
+	        response.setContentType("application/pdf");
+	        response.setHeader("Content-Disposition", "inline; filename=ventas.pdf");
+	        
+	        Document document = new Document();
+	        try {
+	            PdfWriter writer = PdfWriter.getInstance(document, response.getOutputStream());
+	            document.open();
+	            ListarVentasPdf pdfGenerator = new ListarVentasPdf();
+	            pdfGenerator.buildPdfDocument(Map.of("ventas", ventas), document, writer, null, response);
+	            document.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+
+
+	@GetMapping("/ListarClientes")
+	public String listarClientes(Model model, @ModelAttribute("cuenta") Cliente cliente) {
+		List<Cliente> lista = rep.findAll();
+		model.addAttribute("cliente", lista);
+		return "ListarClientes";
 	}
 
 }
