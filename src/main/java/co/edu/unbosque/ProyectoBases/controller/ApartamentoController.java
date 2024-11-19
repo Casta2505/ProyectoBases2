@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import co.edu.unbosque.ProyectoBases.PostGres.model.Casa;
 import co.edu.unbosque.ProyectoBases.Sql.model.Apartamento;
 import co.edu.unbosque.ProyectoBases.Sql.repository.ApartamentoRepository;
 
@@ -27,7 +26,7 @@ public class ApartamentoController {
 		List<Apartamento> lista = aptoRep.findAll();
 		List<Apartamento> aux = new ArrayList<Apartamento>();
 		for (int i = 0; i < lista.size(); i++) {
-			if (lista.get(i).getComprada() == false) {
+			if (lista.get(i).getComprada()==false) {
 				aux.add(lista.get(i));
 			}
 		}

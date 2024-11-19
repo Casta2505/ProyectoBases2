@@ -81,7 +81,7 @@ public class VentaController {
 		Apartamento apto = new Apartamento();
 		apto.setArea(area);
 		apto.setBalcon(balcon);
-		apto.setComprada(balcon);
+		apto.setComprada(false);
 		apto.setDireccion(direccion);
 		apto.setHabitaciones(habitaciones);
 		apto.setNumDePisosEdificio(numDePisosEdificio);
@@ -100,7 +100,7 @@ public class VentaController {
 		model.addAttribute("cuenta", cliente);
 		return "IndexCliente";
 	}
-	
+
 	@GetMapping("/MostrarVentas")
 	public String mostrarVentas(Model model, @ModelAttribute("cuenta") Cliente cliente) {
 		List<Venta> lista = ventaRep.findAll();
