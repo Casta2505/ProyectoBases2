@@ -4,68 +4,107 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Simulación de Pago</title>
 <style>
+/* General */
 body {
-	font-family: Arial, sans-serif;
-	background-color: #f7f7f7;
+	font-family: 'Arial', sans-serif;
+	background: linear-gradient(to right, #dce0e6, #a9b1c3);
+	color: #2c3e50;
 	margin: 0;
 	padding: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
 }
 
 .container {
-	width: 50%;
-	margin: 50px auto;
-	background-color: #fff;
+	background-color: #ffffff;
 	padding: 30px;
 	border-radius: 8px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	max-width: 500px;
+	width: 90%;
 }
 
 h2 {
 	text-align: center;
-	color: #333;
+	margin-bottom: 20px;
+	color: #34495e;
 }
 
-.form-group {
-	margin-bottom: 15px;
-}
-
-label {
+.form-group label {
 	font-weight: bold;
-	display: block;
 	margin-bottom: 5px;
+	display: block;
 }
 
 input[type="text"], input[type="number"], input[type="date"] {
 	width: 100%;
-	padding: 8px;
+	padding: 10px;
 	margin-top: 5px;
-	border: 1px solid #ddd;
-	border-radius: 4px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.payment-button-container {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 15px;
 }
 
 .payment-button {
-	width: 100%;
-	padding: 12px;
-	background-color: #4CAF50;
+	padding: 12px 20px;
+	background-color: #1c5980;
 	color: white;
 	border: none;
 	border-radius: 5px;
 	font-size: 16px;
+	font-weight: bold;
 	cursor: pointer;
+	transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .payment-button:hover {
-	background-color: #45a049;
+	background-color: #12394e;
+	transform: scale(1.05);
+}
+
+.logo-container {
+	display: flex;
+	gap: 10px;
+}
+
+.logo {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
 }
 
 .message {
 	margin-top: 20px;
 	text-align: center;
+	font-size: 1.1rem;
+}
+
+.message.success {
 	color: green;
 }
 
-.error {
+.message.error {
 	color: red;
+}
+
+/* Responsivo */
+@media ( max-width : 768px) {
+	.container {
+		padding: 20px;
+	}
+	.payment-button-container {
+		flex-direction: column;
+		gap: 10px;
+	}
 }
 </style>
 <!-- Incluir librería de confeti -->
@@ -75,27 +114,36 @@ input[type="text"], input[type="number"], input[type="date"] {
 <body>
 
 	<div class="container">
-		<h2>Simulación de Pago</h2>
+		<h2>Pago De Propiedad</h2>
 		<form id="paymentForm">
 			<div class="form-group">
 				<label for="cardNumber">Número de tarjeta</label> <input
 					type="number" id="cardNumber" name="cardNumber"
 					placeholder="XXXX-XXXX-XXXX-XXXX" required>
 			</div>
+			<br>
 			<div class="form-group">
 				<label for="expDate">Fecha de expiración</label> <input type="date"
 					id="expDate" name="expDate" required>
 			</div>
+			<br>
 			<div class="form-group">
 				<label for="cvv">Código de seguridad (CVV)</label> <input
 					type="number" id="cvv" name="cvv" placeholder="XXX" required>
 			</div>
+			<br>
 			<div class="form-group">
 				<label for="amount">Monto a pagar</label>
 				<p th:text="${casa.precio}"></p>
 			</div>
-			<button type="button" class="payment-button" id="payButton">Realizar
-				Pago</button>
+			<div class="payment-button-container">
+				<div class="logo-container">
+					<img src="/pse.jpg" alt="PSE Logo" class="logo"> <img
+						src="/visa.png" alt="Visa Logo" class="logo">
+				</div>
+				<button type="button" class="payment-button" id="payButton">Realizar
+					Pago</button>
+			</div>
 		</form>
 
 		<div class="message" id="message"></div>

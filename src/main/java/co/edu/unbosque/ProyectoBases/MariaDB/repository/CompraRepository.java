@@ -5,10 +5,15 @@ import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
+import co.edu.unbosque.ProyectoBases.MariaDB.model.Cliente;
 import co.edu.unbosque.ProyectoBases.MariaDB.model.Compra;
 
-public interface CompraRepository extends CrudRepository<Compra, Long>{
-    public List<Compra> findAll();
+public interface CompraRepository extends CrudRepository<Compra, Long> {
+	public List<Compra> findAll();
+
 	public Optional<Compra> findById(Long idCompra);
+
 	public void deleteById(Long idCompra);
+
+	public List<Compra> findAllByIdCliente(Cliente cliente);
 }

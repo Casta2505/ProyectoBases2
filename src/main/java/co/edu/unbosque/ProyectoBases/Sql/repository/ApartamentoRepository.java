@@ -13,4 +13,6 @@ public interface ApartamentoRepository extends CrudRepository<Apartamento, Long>
 	public Optional<Apartamento> findById(Long idCompra);
 
 	public void deleteById(Integer idCompra);
+
+	public List<Apartamento> findAllByComprada(boolean comprada);
 }

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lista de Ventas</title>
+<style>
+/* General */
+body {
+	font-family: 'Arial', sans-serif;
+	background: linear-gradient(to right, #dce0e6, #a9b1c3);
+	color: #2c3e50;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+/* Contenedor */
+.container {
+	background-color: #ffffff;
+	padding: 2rem;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	max-width: 800px;
+	width: 100%;
+	border: 1px solid #b0bec5;
+}
+
+/* Título */
+.title {
+	background-color: #34495e;
+	color: #ffffff;
+	padding: 10px;
+	border-radius: 5px;
+	margin-bottom: 1.5rem;
+	font-size: 1.5rem;
+	font-weight: bold;
+	text-align: center;
+}
+
+/* Tabla */
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 1rem;
+}
+
+th, td {
+	padding: 10px;
+	text-align: left;
+	border-bottom: 1px solid #b0bec5;
+}
+
+th {
+	background-color: #1c5980;
+	color: white;
+	font-weight: bold;
+}
+
+tr:hover {
+	background-color: #f2f2f2;
+}
+
+/* Botón */
+.button {
+	display: block;
+	width: 100%;
+	padding: 10px;
+	background-color: #1c5980;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	font-size: 1rem;
+	font-weight: bold;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button:hover {
+	background-color: #12394e;
+	transform: scale(1.02);
+}
+</style>
+</head>
+<body>
+	<div class="container">
+		<div class="title">Lista de Ventas</div>
+		<table>
+			<thead>
+				<tr>
+					<th>ID Cliente</th>
+					<th>Precio</th>
+					<th>Fecha</th>
+					<th>Propiedad</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="venta, stat : ${ventas}">
+					<td th:text="${venta.idCliente.nombre}"></td>
+					<td th:text="${venta.precio}"></td>
+					<td th:text="${venta.fecha}"></td>
+					<td><span th:if="${venta.idApartamento == 0}"
+						th:text="'Casa ID: ' + ${casas[stat.index].id}"></span> <span
+						th:if="${venta.idApartamento != 0}"
+						th:text="'Apartamento ID: ' + ${apartamentos[stat.index].id}"></span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<a href="/IndexCliente" class="button">Volver</a>
+	</div>
+</body>
+</html>

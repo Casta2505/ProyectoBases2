@@ -7,8 +7,12 @@ import org.springframework.data.repository.CrudRepository;
 
 import co.edu.unbosque.ProyectoBases.PostGres.model.Casa;
 
-public interface CasaRepository extends CrudRepository<Casa, Long>{
+public interface CasaRepository extends CrudRepository<Casa, Long> {
 	public List<Casa> findAll();
+
 	public Optional<Casa> findById(Long idCompra);
+
 	public void deleteById(Integer idCompra);
+
+	public List<Casa> findAllByComprada(boolean comprada);
 }

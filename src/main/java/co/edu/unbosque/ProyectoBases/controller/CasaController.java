@@ -1,6 +1,7 @@
 package co.edu.unbosque.ProyectoBases.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import co.edu.unbosque.ProyectoBases.MariaDB.model.Cliente;
 import co.edu.unbosque.ProyectoBases.PostGres.model.Casa;
 import co.edu.unbosque.ProyectoBases.PostGres.repository.CasaRepository;
+import jakarta.transaction.Transactional;
 
 @Controller
 @SessionAttributes("casa")
@@ -42,18 +44,24 @@ public class CasaController {
 	@GetMapping("/MostrarCasas")
 	public String mostarCasas(Model model, @ModelAttribute("cuenta") Cliente cliente) {
 		List<Casa> lista = casaRep.findAll();
-		model.addAttribute("casas", lista);
+		List<Casa> aux = new ArrayList<Casa>();
+		for (int i = 0; i < lista.size(); i++) {
+			if (lista.get(i).isComprada() == false) {
+				aux.add(lista.get(i));
+			}
+		}
+		model.addAttribute("casas", aux);
 		model.addAttribute("cuenta", cliente);
 		return "MostrarCasas";
 	}
 
 	@GetMapping("/AgregarCasaPagina")
-	public String agregarCasaPagina() {
+	public String agregarCasaPagina(Model model) {
 		return "AgregarCasa";
 	}
 
 	@PostMapping("/AgregarCasa")
-	public String actualizarCasa(Model model, @RequestParam("area") double area, @RequestParam("precio") double precio,
+	public String agregarCasa(Model model, @RequestParam("area") double area, @RequestParam("precio") double precio,
 			@RequestParam("direccion") String direccion, @RequestParam("habitaciones") Integer habitaciones,
 			@RequestParam("numDePisos") Integer numDePisos,
 			@RequestParam(value = "jardin", defaultValue = "no") String jardinStr,

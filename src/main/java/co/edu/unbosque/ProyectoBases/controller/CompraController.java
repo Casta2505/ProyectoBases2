@@ -35,6 +35,8 @@ public class CompraController {
 			@SessionAttribute("casa") Object aux) {
 		try {
 			Casa casa = (Casa) aux;
+			casa.setComprada(true);
+			casaRep.save(casa);
 			model.addAttribute("cliente", cliente);
 			Compra compra = new Compra();
 			compra.setFecha(LocalDate.now());
@@ -47,6 +49,8 @@ public class CompraController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Apartamento casa = (Apartamento) aux;
+			casa.setComprada(true);
+			aptoRep.save(casa);
 			model.addAttribute("cliente", cliente);
 			Compra compra = new Compra();
 			compra.setFecha(LocalDate.now());

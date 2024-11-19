@@ -18,8 +18,8 @@ public class Venta {
 	private Cliente idCliente;
 	private double precio;
 	private LocalDate fecha;
-	private Integer idCasa;
-	private Integer idApartamento;
+	private Long idCasa;
+	private Long idApartamento;
 
 	public Long getId() {
 		return id;
@@ -53,19 +53,19 @@ public class Venta {
 		this.fecha = fecha;
 	}
 
-	public Integer getIdCasa() {
+	public Long getIdCasa() {
 		return idCasa;
 	}
 
-	public void setIdCasa(Integer idCasa) {
+	public void setIdCasa(Long idCasa) {
 		this.idCasa = idCasa;
 	}
 
-	public Integer getIdApartamento() {
+	public Long getIdApartamento() {
 		return idApartamento;
 	}
 
-	public void setIdApartamento(Integer idApartamento) {
+	public void setIdApartamento(Long idApartamento) {
 		this.idApartamento = idApartamento;
 	}
 

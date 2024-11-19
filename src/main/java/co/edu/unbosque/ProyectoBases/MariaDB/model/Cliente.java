@@ -1,7 +1,5 @@
 package co.edu.unbosque.ProyectoBases.MariaDB.model;
 
-import java.util.List;
-
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.GeneratedValue;
@@ -20,31 +18,12 @@ public class Cliente {
 	private String direccion;
 	private String contrasena;
 
-	private List<Integer> casas;
-	private List<Integer> apartamentos;
-
 	public String getContrasena() {
 		return contrasena;
 	}
 
 	public void setContrasena(String contrasena) {
 		this.contrasena = contrasena;
-	}
-
-	public List<Integer> getCasas() {
-		return casas;
-	}
-
-	public void setCasas(List<Integer> casas) {
-		this.casas = casas;
-	}
-
-	public List<Integer> getApartamentos() {
-		return apartamentos;
-	}
-
-	public void setApartamentos(List<Integer> apartamentos) {
-		this.apartamentos = apartamentos;
 	}
 
 	public Long getId() {

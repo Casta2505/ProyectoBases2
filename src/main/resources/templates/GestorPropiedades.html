@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestor de Ventas</title>
+<style>
+/* General */
+body {
+	font-family: 'Arial', sans-serif;
+	background: linear-gradient(to right, #dce0e6, #a9b1c3);
+	color: #2c3e50;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+/* Contenedor */
+.container {
+	background-color: #ffffff;
+	padding: 2rem;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	max-width: 400px;
+	width: 100%;
+	border: 1px solid #b0bec5;
+	text-align: center;
+}
+
+/* Título */
+.title {
+	background-color: #34495e;
+	color: #ffffff;
+	padding: 10px;
+	border-radius: 5px;
+	margin-bottom: 2rem;
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
+/* Contenedor de botones */
+.buttons {
+	display: flex;
+	flex-direction: column;
+	justify-content: center; /* Centrado vertical */
+	align-items: center; /* Centrado horizontal */
+	gap: 1rem; /* Espacio entre botones */
+}
+
+/* Botones */
+.button {
+	width: 70%; /* Botones más pequeños */
+	padding: 10px;
+	background-color: #1c5980;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	font-size: 1rem;
+	font-weight: bold;
+	cursor: pointer;
+	text-decoration: none;
+	text-align: center;
+	transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button:hover {
+	background-color: #12394e;
+	transform: scale(1.02);
+}
+</style>
+</head>
+<body>
+	<div class="container">
+		<div class="title">Gestor De Propiedades</div>
+		<div class="buttons">
+			<a href="/verCompras" class="button">Ver Compras</a> <a
+				href="/verVentas" class="button">Ver Ventas</a> <a
+				href="/IndexCliente" class="button">Volver</a>
+		</div>
+	</div>
+</body>
+</html>
